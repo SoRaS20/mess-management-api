@@ -1,0 +1,7 @@
+import mess.management.Member
+
+model {
+    Iterable<Member> memberList
+}
+
+json tmpl.member(memberList ?: [])

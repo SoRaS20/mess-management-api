@@ -1,0 +1,14 @@
+import mess.management.Member
+
+model {
+    Member member
+}
+
+json {
+    id member.id
+    name member.name
+    phone member.phone
+    joinDate member.joinDate?.toString()
+    active member.active
+    userId member.user?.id
+}

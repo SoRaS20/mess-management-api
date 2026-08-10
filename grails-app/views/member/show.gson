@@ -1,0 +1,7 @@
+import mess.management.Member
+
+model {
+    Member member
+}
+
+json g.render(template: 'member', model: [member: member])
