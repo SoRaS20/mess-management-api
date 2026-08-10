@@ -6,6 +6,7 @@ import java.time.LocalDate
 class BootStrap {
 
     MealService mealService
+    JwtService jwtService
 
     def init = { servletContext ->
         if (Environment.current == Environment.DEVELOPMENT) {
@@ -19,10 +20,24 @@ class BootStrap {
     private void seedDevData() {
         // Users — find-or-create explicitly (findOrCreateBy* ignores trailing closures,
         // so non-queried fields like password would stay null → validation failure)
-        User admin   = User.findByUsername('admin')  ?: new User(username: 'admin',  password: 'admin123', role: 'ADMIN').save(failOnError: true)
-        User member1 = User.findByUsername('rahman') ?: new User(username: 'rahman', password: 'pass123',  role: 'MEMBER').save(failOnError: true)
-        User member2 = User.findByUsername('karim')  ?: new User(username: 'karim',  password: 'pass123',  role: 'MEMBER').save(failOnError: true)
-        User member3 = User.findByUsername('salim')  ?: new User(username: 'salim',  password: 'pass123',  role: 'MEMBER').save(failOnError: true)
+        String adminPass = jwtService.hashPassword('admin123')
+        String userPass = jwtService.hashPassword('pass123')
+
+        User admin   = User.findByUsername('admin')
+        if (admin) { if (!admin.password.startsWith('$2a$')) { admin.password = adminPass; admin.save(flush:true) } }
+        else { admin = new User(username: 'admin',  password: adminPass, role: 'ADMIN').save(failOnError: true) }
+        
+        User member1 = User.findByUsername('rahman')
+        if (member1) { if (!member1.password.startsWith('$2a$')) { member1.password = userPass; member1.save(flush:true) } }
+        else { member1 = new User(username: 'rahman', password: userPass,  role: 'MEMBER').save(failOnError: true) }
+
+        User member2 = User.findByUsername('karim')
+        if (member2) { if (!member2.password.startsWith('$2a$')) { member2.password = userPass; member2.save(flush:true) } }
+        else { member2 = new User(username: 'karim',  password: userPass,  role: 'MEMBER').save(failOnError: true) }
+
+        User member3 = User.findByUsername('salim')
+        if (member3) { if (!member3.password.startsWith('$2a$')) { member3.password = userPass; member3.save(flush:true) } }
+        else { member3 = new User(username: 'salim',  password: userPass,  role: 'MEMBER').save(failOnError: true) }
 
         // Members
         Member m1 = Member.findByName('Rahman') ?: new Member(name: 'Rahman', phone: '+8801712345678', joinDate: LocalDate.of(2026,1,1), user: member1).save(failOnError: true)

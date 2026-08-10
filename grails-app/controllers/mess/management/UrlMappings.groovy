@@ -7,6 +7,9 @@ class UrlMappings {
 
             // --- Custom routes (declared BEFORE the generic CRUD catch-alls) ---
 
+            // Auth
+            post "/login"(controller: 'auth', action: 'login')
+
             // Dashboard
             get "/dashboard/$monthId"(controller: 'dashboard', action: 'show')
 
