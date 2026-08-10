@@ -35,13 +35,16 @@ class UrlMappings {
             get "/deposits/byMonth/$monthId"(controller: 'deposit', action: 'byMonth')
             get "/rents/byMonth/$monthId"(controller: 'rent', action: 'byMonth')
 
-            // --- Generic REST CRUD by convention (declared LAST) ---
-            delete "/$controller/$id(.$format)?"(action: "delete")
-            get "/$controller(.$format)?"(action: "index")
-            get "/$controller/$id(.$format)?"(action: "show")
-            post "/$controller(.$format)?"(action: "save")
-            put "/$controller/$id(.$format)?"(action: "update")
-            patch "/$controller/$id(.$format)?"(action: "patch")
+            // --- RESTful CRUD, plural resource URIs (declared LAST) ---
+            // Each generates: GET (index), GET /$id (show), POST (save),
+            // PUT/PATCH /$id (update/patch), DELETE /$id (delete).
+            "/members"(resources: 'member')
+            "/months"(resources: 'month')
+            "/meals"(resources: 'meal')
+            "/bazar"(resources: 'bazar')
+            "/expenses"(resources: 'expense')
+            "/deposits"(resources: 'deposit')
+            "/rents"(resources: 'rent')
         }
 
         "/"(controller: 'application', action: 'index')
