@@ -1,0 +1,16 @@
+import mess.management.Expense
+
+model {
+    Expense expense
+}
+
+json {
+    id expense.id
+    monthId expense.month?.id
+    amount expense.amount
+    description expense.description
+    category expense.category
+    expenseDate expense.expenseDate?.toString()
+    paidById expense.paidBy?.id
+    paidByName expense.paidBy?.name
+}

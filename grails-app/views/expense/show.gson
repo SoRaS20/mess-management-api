@@ -1,0 +1,7 @@
+import mess.management.Expense
+
+model {
+    Expense expense
+}
+
+json g.render(template: 'expense', model: [expense: expense])

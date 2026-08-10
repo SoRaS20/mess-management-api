@@ -1,0 +1,7 @@
+import mess.management.Expense
+
+model {
+    Iterable<Expense> expenseList
+}
+
+json tmpl.expense(expenseList ?: [])
