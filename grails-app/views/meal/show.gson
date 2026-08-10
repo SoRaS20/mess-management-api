@@ -1,0 +1,7 @@
+import mess.management.Meal
+
+model {
+    Meal meal
+}
+
+json g.render(template: 'meal', model: [meal: meal])

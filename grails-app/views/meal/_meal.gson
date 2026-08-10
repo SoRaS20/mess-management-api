@@ -1,0 +1,17 @@
+import mess.management.Meal
+
+model {
+    Meal meal
+}
+
+json {
+    id meal.id
+    memberId meal.member?.id
+    memberName meal.member?.name
+    monthId meal.month?.id
+    recordDate meal.recordDate?.toString()
+    breakfastOn meal.breakfastOn
+    lunchOn meal.lunchOn
+    dinnerOn meal.dinnerOn
+    dailyCount meal.dailyCount
+}

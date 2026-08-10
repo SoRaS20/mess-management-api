@@ -1,0 +1,7 @@
+import mess.management.Meal
+
+model {
+    Iterable<Meal> mealList
+}
+
+json tmpl.meal(mealList ?: [])
