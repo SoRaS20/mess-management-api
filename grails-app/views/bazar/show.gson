@@ -1,0 +1,7 @@
+import mess.management.Bazar
+
+model {
+    Bazar bazar
+}
+
+json g.render(template: 'bazar', model: [bazar: bazar])

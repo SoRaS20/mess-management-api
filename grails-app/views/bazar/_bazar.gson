@@ -1,0 +1,15 @@
+import mess.management.Bazar
+
+model {
+    Bazar bazar
+}
+
+json {
+    id bazar.id
+    memberId bazar.member?.id
+    memberName bazar.member?.name
+    monthId bazar.month?.id
+    amount bazar.amount
+    description bazar.description
+    bazarDate bazar.bazarDate?.toString()
+}

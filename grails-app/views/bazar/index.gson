@@ -1,0 +1,7 @@
+import mess.management.Bazar
+
+model {
+    Iterable<Bazar> bazarList
+}
+
+json tmpl.bazar(bazarList ?: [])
