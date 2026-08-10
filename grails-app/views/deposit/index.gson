@@ -1,0 +1,7 @@
+import mess.management.Deposit
+
+model {
+    Iterable<Deposit> depositList
+}
+
+json tmpl.deposit(depositList ?: [])

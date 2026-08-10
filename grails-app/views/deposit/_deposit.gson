@@ -1,0 +1,15 @@
+import mess.management.Deposit
+
+model {
+    Deposit deposit
+}
+
+json {
+    id deposit.id
+    memberId deposit.member?.id
+    memberName deposit.member?.name
+    monthId deposit.month?.id
+    amount deposit.amount
+    depositDate deposit.depositDate?.toString()
+    description deposit.description
+}

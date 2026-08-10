@@ -1,0 +1,7 @@
+import mess.management.Deposit
+
+model {
+    Deposit deposit
+}
+
+json g.render(template: 'deposit', model: [deposit: deposit])
