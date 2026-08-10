@@ -1,0 +1,96 @@
+{
+  "info": {
+    "name": "Mess Management API",
+    "description": "REST API for the Mess Management System. Base URL and IDs are collection variables — edit them under the collection's Variables tab. Dev-seed defaults: monthId=9, memberId=5 (Rahman).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api" },
+    { "key": "monthId", "value": "9" },
+    { "key": "memberId", "value": "5" },
+    { "key": "mealId", "value": "96" },
+    { "key": "date", "value": "2026-08-05" }
+  ],
+  "item": [
+    {
+      "name": "Members",
+      "item": [
+        { "name": "List members", "request": { "method": "GET", "url": "{{baseUrl}}/members" } },
+        { "name": "Get member", "request": { "method": "GET", "url": "{{baseUrl}}/members/{{memberId}}" } },
+        { "name": "Create member", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Jamil\",\n  \"phone\": \"+8801511112222\",\n  \"joinDate\": \"2026-08-01\"\n}" }, "url": "{{baseUrl}}/members" } },
+        { "name": "Update member", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Jamil Uddin\",\n  \"phone\": \"+8801511113333\"\n}" }, "url": "{{baseUrl}}/members/{{memberId}}" } },
+        { "name": "Toggle active", "request": { "method": "PUT", "url": "{{baseUrl}}/members/{{memberId}}/toggleActive" } },
+        { "name": "Delete member", "request": { "method": "DELETE", "url": "{{baseUrl}}/members/{{memberId}}" } }
+      ]
+    },
+    {
+      "name": "Months",
+      "item": [
+        { "name": "List months", "request": { "method": "GET", "url": "{{baseUrl}}/months" } },
+        { "name": "Get month", "request": { "method": "GET", "url": "{{baseUrl}}/months/{{monthId}}" } },
+        { "name": "Create month", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"year\": 2026,\n  \"monthNo\": 9\n}" }, "url": "{{baseUrl}}/months" } },
+        { "name": "Close month", "request": { "method": "PUT", "url": "{{baseUrl}}/months/{{monthId}}/close" } },
+        { "name": "Reopen month", "request": { "method": "PUT", "url": "{{baseUrl}}/months/{{monthId}}/reopen" } },
+        { "name": "Set manager", "request": { "method": "PUT", "url": "{{baseUrl}}/months/{{monthId}}/manager/{{memberId}}" } },
+        { "name": "Delete month", "request": { "method": "DELETE", "url": "{{baseUrl}}/months/{{monthId}}" } }
+      ]
+    },
+    {
+      "name": "Meals",
+      "item": [
+        { "name": "Generate default meals", "request": { "method": "POST", "url": "{{baseUrl}}/meals/generate/{{monthId}}" } },
+        { "name": "List meals for month", "request": { "method": "GET", "url": "{{baseUrl}}/meals/byMonth/{{monthId}}" } },
+        { "name": "Meals for a date", "request": { "method": "GET", "url": "{{baseUrl}}/meals/byDate/{{monthId}}/{{date}}" } },
+        { "name": "Get meal", "request": { "method": "GET", "url": "{{baseUrl}}/meals/{{mealId}}" } },
+        { "name": "Toggle a slot OFF", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"slot\": \"dinner\",\n  \"on\": false\n}" }, "url": "{{baseUrl}}/meals/{{mealId}}/toggle" } },
+        { "name": "Admin-correct meal", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"breakfastOn\": false,\n  \"lunchOn\": true,\n  \"dinnerOn\": true\n}" }, "url": "{{baseUrl}}/meals/{{mealId}}" } },
+        { "name": "Delete meal", "request": { "method": "DELETE", "url": "{{baseUrl}}/meals/{{mealId}}" } }
+      ]
+    },
+    {
+      "name": "Bazar",
+      "item": [
+        { "name": "List bazar for month", "request": { "method": "GET", "url": "{{baseUrl}}/bazar/byMonth/{{monthId}}" } },
+        { "name": "Create bazar", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"member\": { \"id\": {{memberId}} },\n  \"month\": { \"id\": {{monthId}} },\n  \"amount\": 1750,\n  \"description\": \"Fish and vegetables\",\n  \"bazarDate\": \"2026-08-20\"\n}" }, "url": "{{baseUrl}}/bazar" } },
+        { "name": "Update bazar", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"amount\": 1900\n}" }, "url": "{{baseUrl}}/bazar/1" } },
+        { "name": "Delete bazar", "request": { "method": "DELETE", "url": "{{baseUrl}}/bazar/1" } }
+      ]
+    },
+    {
+      "name": "Expenses",
+      "item": [
+        { "name": "List expenses for month", "request": { "method": "GET", "url": "{{baseUrl}}/expenses/byMonth/{{monthId}}" } },
+        { "name": "Create expense", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"month\": { \"id\": {{monthId}} },\n  \"amount\": 900,\n  \"description\": \"Electricity bill\",\n  \"category\": \"electricity\",\n  \"expenseDate\": \"2026-08-18\",\n  \"paidBy\": { \"id\": {{memberId}} }\n}" }, "url": "{{baseUrl}}/expenses" } },
+        { "name": "Update expense", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"amount\": 1000\n}" }, "url": "{{baseUrl}}/expenses/1" } },
+        { "name": "Delete expense", "request": { "method": "DELETE", "url": "{{baseUrl}}/expenses/1" } }
+      ]
+    },
+    {
+      "name": "Deposits",
+      "item": [
+        { "name": "List deposits for month", "request": { "method": "GET", "url": "{{baseUrl}}/deposits/byMonth/{{monthId}}" } },
+        { "name": "Create deposit", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"member\": { \"id\": {{memberId}} },\n  \"month\": { \"id\": {{monthId}} },\n  \"amount\": 2000,\n  \"depositDate\": \"2026-08-15\",\n  \"description\": \"Mid-month top-up\"\n}" }, "url": "{{baseUrl}}/deposits" } },
+        { "name": "Update deposit", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"amount\": 2500\n}" }, "url": "{{baseUrl}}/deposits/1" } },
+        { "name": "Delete deposit", "request": { "method": "DELETE", "url": "{{baseUrl}}/deposits/1" } }
+      ]
+    },
+    {
+      "name": "Rents",
+      "item": [
+        { "name": "List rents for month", "request": { "method": "GET", "url": "{{baseUrl}}/rents/byMonth/{{monthId}}" } },
+        { "name": "Create rent", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"member\": { \"id\": {{memberId}} },\n  \"month\": { \"id\": {{monthId}} },\n  \"amount\": 1500\n}" }, "url": "{{baseUrl}}/rents" } },
+        { "name": "Update rent", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"amount\": 1600\n}" }, "url": "{{baseUrl}}/rents/10" } },
+        { "name": "Delete rent", "request": { "method": "DELETE", "url": "{{baseUrl}}/rents/10" } }
+      ]
+    },
+    {
+      "name": "Dashboard & Reports",
+      "item": [
+        { "name": "Dashboard summary", "request": { "method": "GET", "url": "{{baseUrl}}/dashboard/{{monthId}}" } },
+        { "name": "Monthly report", "request": { "method": "GET", "url": "{{baseUrl}}/reports/monthly/{{monthId}}" } },
+        { "name": "Daily report", "request": { "method": "GET", "url": "{{baseUrl}}/reports/daily/{{monthId}}/{{date}}" } },
+        { "name": "Member report", "request": { "method": "GET", "url": "{{baseUrl}}/reports/member/{{memberId}}/{{monthId}}" } }
+      ]
+    }
+  ]
+}
