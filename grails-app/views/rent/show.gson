@@ -1,0 +1,7 @@
+import mess.management.Rent
+
+model {
+    Rent rent
+}
+
+json g.render(template: 'rent', model: [rent: rent])

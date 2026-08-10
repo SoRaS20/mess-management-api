@@ -1,0 +1,13 @@
+import mess.management.Rent
+
+model {
+    Rent rent
+}
+
+json {
+    id rent.id
+    memberId rent.member?.id
+    memberName rent.member?.name
+    monthId rent.month?.id
+    amount rent.amount
+}

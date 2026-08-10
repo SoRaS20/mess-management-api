@@ -1,0 +1,7 @@
+import mess.management.Rent
+
+model {
+    Iterable<Rent> rentList
+}
+
+json tmpl.rent(rentList ?: [])
