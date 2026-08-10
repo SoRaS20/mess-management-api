@@ -1,0 +1,7 @@
+import mess.management.Month
+
+model {
+    Iterable<Month> monthList
+}
+
+json tmpl.month(monthList ?: [])

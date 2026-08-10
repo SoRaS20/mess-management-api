@@ -1,0 +1,7 @@
+import mess.management.Month
+
+model {
+    Month month
+}
+
+json g.render(template: 'month', model: [month: month])

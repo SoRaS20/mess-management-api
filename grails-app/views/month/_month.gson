@@ -1,0 +1,14 @@
+import mess.management.Month
+
+model {
+    Month month
+}
+
+json {
+    id month.id
+    year month.year
+    monthNo month.monthNo
+    closed month.closed
+    managerId month.manager?.id
+    managerName month.manager?.name
+}
