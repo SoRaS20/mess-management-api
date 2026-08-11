@@ -15,38 +15,40 @@ class MemberController extends RestfulController<Member> {
         super(Member)
     }
 
-    @Transactional
     @Override
     def save() {
         def json = request.JSON
         
-        Member member = new Member(
-            name: json.name, 
-            phone: json.phone, 
-            joinDate: json.joinDate ? LocalDate.parse(json.joinDate as String) : LocalDate.now()
-        )
-        
-        if (json.createAppUser && json.username && json.password) {
-            if (User.findByUsername(json.username as String)) {
-                member.errors.rejectValue('user', 'unique', 'Username is already taken')
+        Member.withTransaction { status ->
+            Member member = new Member(
+                name: json.name, 
+                phone: json.phone ?: null, 
+                joinDate: json.joinDate ? LocalDate.parse(json.joinDate as String) : LocalDate.now()
+            )
+            
+            if (json.createAppUser && json.username && json.password) {
+                if (User.findByUsername(json.username as String)) {
+                    member.errors.rejectValue('user', 'unique', 'Username is already taken')
+                    respond member.errors, status: 422
+                    status.setRollbackOnly()
+                    return
+                }
+                
+                String hash = jwtService.hashPassword(json.password as String)
+                User user = new User(username: json.username, password: hash, role: 'MEMBER').save(failOnError: true)
+                member.user = user
+            }
+            
+            member.validate()
+            if (member.hasErrors()) {
+                status.setRollbackOnly()
                 respond member.errors, status: 422
                 return
             }
             
-            String hash = jwtService.hashPassword(json.password as String)
-            User user = new User(username: json.username, password: hash, role: 'MEMBER').save(failOnError: true)
-            member.user = user
+            member.save(flush: true)
+            respond member, status: 201
         }
-        
-        member.validate()
-        if (member.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond member.errors, status: 422
-            return
-        }
-        
-        member.save(flush: true)
-        respond member, status: 201
     }
 
     def toggleActive() {
