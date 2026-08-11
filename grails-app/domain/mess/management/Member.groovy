@@ -8,7 +8,12 @@ class Member {
     String phone
     LocalDate joinDate = LocalDate.now()
     boolean active = true
+    boolean banned = false
     User user
+
+    static mapping = {
+        user cascade: 'all-delete-orphan'
+    }
 
     static constraints = {
         name blank: false, size: 2..100
