@@ -1,0 +1,18 @@
+# Build output & caches (rebuilt inside the image)
+build/
+.gradle/
+out/
+
+# IDE / editor
+.idea/
+*.iml
+.vscode/
+
+# VCS & logs
+.git/
+.gitignore
+*.log
+
+# Local env files must never enter the image
+.env
+.env.*
