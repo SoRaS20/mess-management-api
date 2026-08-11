@@ -39,4 +39,13 @@ class ExpenseService {
     BigDecimal totalExpenses(Long monthId) {
         byMonth(monthId).inject(0.0G) { BigDecimal sum, Expense e -> sum + (e.amount ?: 0.0G) }
     }
+
+    @Transactional(readOnly = true)
+    BigDecimal totalExpenseFor(Long memberId, Long monthId) {
+        Member theMember = Member.get(memberId)
+        Month theMonth = Month.get(monthId)
+        if (!theMember || !theMonth) return 0.0G
+        Expense.where { paidBy == theMember && month == theMonth }.list()
+                .inject(0.0G) { BigDecimal sum, Expense e -> sum + (e.amount ?: 0.0G) }
+    }
 }

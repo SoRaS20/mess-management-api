@@ -38,6 +38,9 @@ class UrlMappings {
             get "/deposits/byMonth/$monthId"(controller: 'deposit', action: 'byMonth')
             get "/rents/byMonth/$monthId"(controller: 'rent', action: 'byMonth')
 
+            // Money log (read-only, all roles)
+            get "/ledger/$monthId"(controller: 'ledger', action: 'index')
+
             // --- RESTful CRUD, plural resource URIs (declared LAST) ---
             // Each generates: GET (index), GET /$id (show), POST (save),
             // PUT/PATCH /$id (update/patch), DELETE /$id (delete).

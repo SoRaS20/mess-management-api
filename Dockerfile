@@ -3,7 +3,7 @@
 # ---------- Build stage ----------
 # Uses the Gradle wrapper committed in the repo so the exact Grails/Gradle
 # versions are honoured. Produces an executable Grails WAR (embedded Tomcat).
-FROM eclipse-temurin:17-jdk AS build
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /src
 
 # Copy the whole backend project (see .dockerignore for what is excluded).
@@ -15,7 +15,7 @@ RUN chmod +x gradlew && \
     cp "$(ls build/libs/*.war | grep -v -- '-plain' | head -n1)" /app.war
 
 # ---------- Runtime stage ----------
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 # curl is used by the docker-compose healthcheck.

@@ -8,10 +8,12 @@ class Rent {
     Member member
     Month month
     BigDecimal amount
+    Date dateCreated
 
     static constraints = {
         member nullable: false, unique: 'month'
         amount min: 0.0G, scale: 2
+        dateCreated nullable: true
         month validator: { Month m, obj ->
             if (m?.closed && (obj.ident() == null || obj.isDirty())) return ['month.closed']
         }

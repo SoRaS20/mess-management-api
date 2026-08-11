@@ -23,11 +23,15 @@ class ReportService {
         List<Map> members = balanceService.balancesForMonth(monthId)
 
         Map totals = [
-                deposits  : sum(members, 'deposit'),
-                mealCost  : sum(members, 'mealCost'),
-                expenses  : summary.totalExpenses,
-                rent      : sum(members, 'rent'),
-                netBalance: sum(members, 'balance')
+                deposits           : sum(members, 'deposit'),
+                mealCost           : sum(members, 'mealCost'),
+                expenses           : summary.totalExpenses,
+                rent               : sum(members, 'rent'),
+                bazarContributions : sum(members, 'bazarContribution'),
+                expenseContributions: sum(members, 'expenseContribution'),
+                foodBalances       : sum(members, 'foodBalance'),
+                rentBalances       : sum(members, 'rentBalance'),
+                netBalance         : sum(members, 'balance')
         ]
 
         [
@@ -87,16 +91,20 @@ class ReportService {
         Map balance = balanceService.balanceFor(memberId, monthId)
 
         [
-                member  : [id: theMember.id, name: theMember.name],
-                month   : [id: theMonth.id, year: theMonth.year, monthNo: theMonth.monthNo],
-                meals   : [totalCount: totalCount, byDay: byDay],
-                deposits: deposits,
-                rent    : balance.rent,
-                mealRate: balance.mealRate,
-                mealCost: balance.mealCost,
-                expenseShare: balance.expenseShare,
-                totalDeposit: balance.deposit,
-                balance : balance.balance
+                member              : [id: theMember.id, name: theMember.name],
+                month               : [id: theMonth.id, year: theMonth.year, monthNo: theMonth.monthNo],
+                meals               : [totalCount: totalCount, byDay: byDay],
+                deposits            : deposits,
+                rent                : balance.rent,
+                mealRate            : balance.mealRate,
+                mealCost            : balance.mealCost,
+                expenseShare        : balance.expenseShare,
+                bazarContribution   : balance.bazarContribution,
+                expenseContribution : balance.expenseContribution,
+                totalDeposit        : balance.deposit,
+                foodBalance         : balance.foodBalance,
+                rentBalance         : balance.rentBalance,
+                balance             : balance.balance
         ]
     }
 

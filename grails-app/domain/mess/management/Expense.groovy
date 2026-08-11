@@ -13,6 +13,7 @@ class Expense {
     String category
     LocalDate expenseDate = LocalDate.now()
     Member paidBy
+    Date dateCreated
 
     static constraints = {
         amount min: 0.0G, scale: 2
@@ -20,6 +21,7 @@ class Expense {
         category inList: ['gas', 'electricity', 'water', 'internet', 'other'], nullable: false
         expenseDate nullable: false
         paidBy nullable: true
+        dateCreated nullable: true
         month validator: { Month m, obj ->
             if (m?.closed && (obj.ident() == null || obj.isDirty())) return ['month.closed']
         }

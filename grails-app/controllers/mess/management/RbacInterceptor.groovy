@@ -38,16 +38,19 @@ class RbacInterceptor {
             return true
         }
 
-        // Meal toggle
-        if (c == 'meal' && a == 'toggle') {
-            // Check if the meal belongs to the user
+        // Meal toggle / admin-correction (update) / delete
+        if (c == 'meal' && a in ['toggle', 'update', 'delete']) {
+            // Check if the meal belongs to the user or the user manages its month
             Long mealId = params.id as Long
             Meal meal = Meal.get(mealId)
-            if (meal?.memberId != (request.memberId as Long)) {
-                render status: 403, text: 'Forbidden: You can only toggle your own meals'
+            if (!meal) {
+                render status: 404, text: 'Meal not found'
                 return false
             }
-            return true
+            if (meal.memberId == (request.memberId as Long)) return true
+            if (isManager(meal.monthId, request.memberId as Long)) return true
+            render status: 403, text: 'Forbidden: You can only toggle your own meals'
+            return false
         }
 
         // Deny anything else by default for MEMBER

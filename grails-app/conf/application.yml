@@ -8,6 +8,10 @@ grails:
     codegen:
         defaultPackage: mess.management
     profile: rest-api
+    cors:
+        enabled: true
+        allowedOrigins:
+            - '*'
 
 ---
 grails:
