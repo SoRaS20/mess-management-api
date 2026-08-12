@@ -11,4 +11,8 @@ class ApplicationController implements PluginManagerAware {
     def index() {
         [grailsApplication: grailsApplication, pluginManager: pluginManager]
     }
+
+    def health() {
+        render status: 200, text: 'ok'
+    }
 }

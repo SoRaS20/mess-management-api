@@ -29,7 +29,7 @@ COPY --from=build /app.war app.war
 # set it explicitly for clarity. DB_URL / DB_USER / DB_PASSWORD are injected
 # at runtime by docker-compose (see .env).
 ENV GRAILS_ENV=production \
-    JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75.0"
+    JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75.0 -Djava.net.preferIPv4Stack=true"
 
 EXPOSE 8080
 

@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 2
     env:
       RENDER_BACKEND_URL: ${{ secrets.RENDER_BACKEND_URL }}
-      DEFAULT_RENDER_BACKEND_URL: https://mess-management-api-wfjf.onrender.com/
+      DEFAULT_RENDER_BACKEND_URL: https://mess-management-api-wfjf.onrender.com/health
 
     steps:
       - name: Ping Render backend
