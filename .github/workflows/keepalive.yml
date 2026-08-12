@@ -11,15 +11,13 @@ jobs:
     timeout-minutes: 2
     env:
       RENDER_BACKEND_URL: ${{ secrets.RENDER_BACKEND_URL }}
+      DEFAULT_RENDER_BACKEND_URL: https://mess-management-api-wfjf.onrender.com/
 
     steps:
       - name: Ping Render backend
         shell: bash
         run: |
-          if [ -z "${RENDER_BACKEND_URL}" ]; then
-            echo "Missing RENDER_BACKEND_URL secret."
-            echo "Add it in GitHub: Settings > Secrets and variables > Actions > Repository secrets."
-            exit 1
-          fi
+          url="${RENDER_BACKEND_URL:-$DEFAULT_RENDER_BACKEND_URL}"
 
-          curl --fail --silent --show-error --location --max-time 30 --retry 2 --retry-delay 5 "${RENDER_BACKEND_URL}" >/dev/null
+          echo "Pinging ${url}"
+          curl --fail --silent --show-error --location --max-time 30 --retry 2 --retry-delay 5 "${url}" >/dev/null
