@@ -71,11 +71,11 @@ environments:
             url: "${DB_URL:jdbc:postgresql://ep-proud-grass-azbeuo5x-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channelBinding=require}"
             properties:
                 jmxEnabled: true
-                initialSize: 5
-                maxActive: 50
-                minIdle: 5
-                maxIdle: 25
-                maxWait: 10000
+                initialSize: 1
+                maxActive: 10
+                minIdle: 1
+                maxIdle: 5
+                maxWait: 15000
                 maxAge: 600000
                 timeBetweenEvictionRunsMillis: 5000
                 minEvictableIdleTimeMillis: 60000

@@ -55,6 +55,7 @@ class UrlMappings {
 
         "/"(controller: 'application', action: 'index')
         "/health"(controller: 'application', action: 'health')
+        "/ready"(controller: 'application', action: 'ready')
         "500"(view: '/error')
         "404"(view: '/notFound')
     }
